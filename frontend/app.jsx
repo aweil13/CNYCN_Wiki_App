@@ -4,5 +4,5 @@ import Root from './components/root'
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("root");
-  ReactDom.render(Root, root);
+  ReactDom.render(<Root className="root-container"/>, root);
 });
