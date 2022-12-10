@@ -58,7 +58,7 @@ var Root = function Root() {
     var wikiLink = wikiEndpoint + wikiParams;
     console.log(wikiLink);
     var wikiConfig = {
-      timeout: 3000
+      timeout: 1000
     };
     function getWikiResponse(_x2, _x3) {
       return _getWikiResponse.apply(this, arguments);
@@ -85,8 +85,7 @@ var Root = function Root() {
       return _getWikiResponse.apply(this, arguments);
     }
     return getWikiResponse(wikiLink, wikiConfig).then(function (res) {
-      setSearchResults(res);
-      console.log(searchResults);
+      setSearchResults(res.query);
     })["catch"](function (err) {
       return console.log(err);
     });

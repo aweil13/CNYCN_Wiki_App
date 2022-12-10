@@ -30,7 +30,7 @@ const Root = () => {
     console.log(wikiLink)
 
     const wikiConfig = {
-      timeout: 3000
+      timeout: 1000
     }
 
     async function getWikiResponse(url, config){
@@ -38,8 +38,8 @@ const Root = () => {
       return res.data
     }
     return getWikiResponse(wikiLink, wikiConfig).then(res => {
-      setSearchResults(res)
-      console.log(searchResults)
+      setSearchResults(res.query)
+      
     }).catch(err => console.log(err))
   }
 
