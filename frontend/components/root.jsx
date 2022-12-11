@@ -28,7 +28,7 @@ const Root = () => {
     + "&origin=*" // ommiting causes error
 
     const wikiLink = wikiEndpoint + wikiParams
-    console.log(wikiLink)
+    
 
     const wikiConfig = {
       timeout: 3000
@@ -42,6 +42,7 @@ const Root = () => {
     return getWikiResponse(wikiLink, wikiConfig).then(res => {
       setSearchResults(res.query)
       console.log(searchResults)
+      console.log(searchValue)
     }).catch(err => console.log(err))
   }
 
@@ -60,6 +61,7 @@ const Root = () => {
         <span>Please click on the icon</span>
         <input className="search-input" type="text" onChange={handleChange} value={searchValue}/>
         <button onClick={() => fetchWiki(searchValue)}>Search</button>
+        
       </div>
     </div>
     )

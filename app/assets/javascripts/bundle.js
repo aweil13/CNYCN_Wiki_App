@@ -59,7 +59,6 @@ var Root = function Root() {
     + "&origin=*"; // ommiting causes error
 
     var wikiLink = wikiEndpoint + wikiParams;
-    console.log(wikiLink);
     var wikiConfig = {
       timeout: 3000
     };
@@ -90,12 +89,9 @@ var Root = function Root() {
       return _getWikiResponse.apply(this, arguments);
     }
     return getWikiResponse(wikiLink, wikiConfig).then(function (res) {
-<<<<<<< HEAD
       setSearchResults(res.query);
-=======
-      setSearchResults(res);
->>>>>>> parent of e54195c... specific search results from json object isolated into hook state variable
       console.log(searchResults);
+      console.log(searchValue);
     })["catch"](function (err) {
       return console.log(err);
     });
