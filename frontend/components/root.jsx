@@ -18,13 +18,14 @@ const Root = () => {
   const fetchWiki = (search) => {
     const wikiEndpoint = 'https://simple.wikipedia.org/w/api.php'
     const wikiParams = '?action=query'
-    + "&list=search"
-    + `&srsearch=${search}`
+    + "&list=search" // request search results in array
+    + `&srsearch=${search}` // specify search term
+    + "&srlimit=50" // 100 results 
     + "&exsentences=2" // request first 2 sentences from wiki page
     + "&explaintext=1" // requests API to provide content in plain text
     + "&format=json" // requests data in JSON format
     + "&formatversion=2" // JSON easier to navigate
-    + "&origin=*" // ommiting causes error 
+    + "&origin=*" // ommiting causes error
 
     const wikiLink = wikiEndpoint + wikiParams
     console.log(wikiLink)
@@ -33,15 +34,25 @@ const Root = () => {
       timeout: 1000
     }
 
+    // async http get request/response function to mediawiki api 
     async function getWikiResponse(url, config){
       const res = await axios.get(url,config)
       return res.data
     }
     return getWikiResponse(wikiLink, wikiConfig).then(res => {
       setSearchResults(res.query)
-      
+      console.log(searchResults)
     }).catch(err => console.log(err))
   }
+
+  const formatWikiData = data => {
+    const dataArray = data.search
+    dataArray.map(entry => {
+      const formattedTitle = entry.title.replace(/\s/g, '')
+      const wikiLink = `https://en.wikipedia.org/wiki/${formattedTitle}`
+    })
+  }
+
 
   return (  
     <div className="main-page-container">

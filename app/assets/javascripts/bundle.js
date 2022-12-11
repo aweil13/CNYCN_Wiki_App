@@ -49,17 +49,22 @@ var Root = function Root() {
   // fetching wikipedia data function
   var fetchWiki = function fetchWiki(search) {
     var wikiEndpoint = 'https://simple.wikipedia.org/w/api.php';
-    var wikiParams = '?action=query' + "&list=search" + "&srsearch=".concat(search) + "&exsentences=2" // request first 2 sentences from wiki page
+    var wikiParams = '?action=query' + "&list=search" // request search results in array
+    + "&srsearch=".concat(search) // specify search term
+    + "&srlimit=50" // 100 results 
+    + "&exsentences=2" // request first 2 sentences from wiki page
     + "&explaintext=1" // requests API to provide content in plain text
     + "&format=json" // requests data in JSON format
     + "&formatversion=2" // JSON easier to navigate
-    + "&origin=*"; // ommiting causes error 
+    + "&origin=*"; // ommiting causes error
 
     var wikiLink = wikiEndpoint + wikiParams;
     console.log(wikiLink);
     var wikiConfig = {
       timeout: 1000
     };
+
+    // async http get request/response function to mediawiki api 
     function getWikiResponse(_x2, _x3) {
       return _getWikiResponse.apply(this, arguments);
     }
@@ -86,8 +91,16 @@ var Root = function Root() {
     }
     return getWikiResponse(wikiLink, wikiConfig).then(function (res) {
       setSearchResults(res.query);
+      console.log(searchResults);
     })["catch"](function (err) {
       return console.log(err);
+    });
+  };
+  var formatWikiData = function formatWikiData(data) {
+    var dataArray = data.search;
+    dataArray.map(function (entry) {
+      var formattedTitle = entry.title.replace(/\s/g, '');
+      var wikiLink = "https://en.wikipedia.org/wiki/".concat(formattedTitle);
     });
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
