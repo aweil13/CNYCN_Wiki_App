@@ -31,7 +31,7 @@ const Root = () => {
     console.log(wikiLink)
 
     const wikiConfig = {
-      timeout: 1000
+      timeout: 3000
     }
 
     // async http get request/response function to mediawiki api 

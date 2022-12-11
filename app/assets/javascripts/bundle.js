@@ -61,7 +61,7 @@ var Root = function Root() {
     var wikiLink = wikiEndpoint + wikiParams;
     console.log(wikiLink);
     var wikiConfig = {
-      timeout: 1000
+      timeout: 3000
     };
 
     // async http get request/response function to mediawiki api 
@@ -90,7 +90,11 @@ var Root = function Root() {
       return _getWikiResponse.apply(this, arguments);
     }
     return getWikiResponse(wikiLink, wikiConfig).then(function (res) {
+<<<<<<< HEAD
       setSearchResults(res.query);
+=======
+      setSearchResults(res);
+>>>>>>> parent of e54195c... specific search results from json object isolated into hook state variable
       console.log(searchResults);
     })["catch"](function (err) {
       return console.log(err);
