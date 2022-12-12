@@ -1,5 +1,5 @@
 {
-  "name": "CNYCN_Wiki",
+  "name": "cnycnwikiapp",
   "private": true,
   "dependencies": {
     "@babel/core": "^7.20.5",
