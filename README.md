@@ -13,6 +13,12 @@ CNYCN Wiki App is a single page web application where a user can enter a search 
 * Javascript
 * HTML/CSS
 
+# Installation
+
+* Once repositority is cloned, run: bundle install, npm install
+* Command: rails s     this runs the rails server.
+* Command: npm start     this runs developer environment to catch errors on frontend. 
+
 ## API Call Code Snippet
 
 ```js

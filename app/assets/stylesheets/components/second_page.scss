@@ -77,10 +77,6 @@
   text-decoration: none;
   font-family: 'Linux Libertine','Georgia','Times',serif;
   color: #333333;
-  animation-duration: 1s;
-  animation-name: slidein;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
 }
 
 .result-link:hover{
@@ -91,7 +87,6 @@
 
 .entry-title{
   font-weight: bold;
-  text-decoration: underline;
 }
 
 .oops-container{
