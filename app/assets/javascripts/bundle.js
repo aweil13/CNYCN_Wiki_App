@@ -3700,24 +3700,26 @@ var FirstPage = function FirstPage() {
       className: "main-page-container"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       className: "input-text-random-container"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "Please click on the icon"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
+      className: "app-title"
+    }, "CNYCN Wiki App"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      className: "prompt"
+    }, "Click to Search"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
       className: "search-input",
       type: "text",
       onChange: handleChange,
       value: searchValue
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      onClick: function onClick() {
-        return fetchWiki(searchValue);
-      }
-    }, "Search"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-      href: randomWikiLink,
-      target: "_blank"
-    }, "Random Link"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
       to: "/results",
       state: {
         search: searchValue
-      }
-    }, "Results")));
+      },
+      className: "results-button"
+    }, "Results"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+      href: randomWikiLink,
+      target: "_blank",
+      className: "random-link"
+    }, "Random Link")));
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FirstPage);
@@ -3802,7 +3804,9 @@ var SecondPage = function SecondPage() {
     isLoaded = _useState6[0],
     setIsLoaded = _useState6[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    fetchWiki();
+    if (searchValue !== undefined) {
+      fetchWiki();
+    }
     console.log(searchResults);
   }, []);
   var fetchWiki = /*#__PURE__*/function () {
@@ -3840,7 +3844,7 @@ var SecondPage = function SecondPage() {
               wikiParams = '?action=query' + "&list=search" // request search results in array
               + "&srsearch=".concat(searchValue) // specify search term
               + "&srlimit=50" // 100 results 
-              + "&exsentences=2" // request first 2 sentences from wiki page
+              + "&srprop=snippet" //extract from page
               + "&explaintext=1" // requests API to provide content in plain text
               + "&format=json" // requests data in JSON format
               + "&formatversion=2" // JSON easier to navigate
@@ -3871,22 +3875,45 @@ var SecondPage = function SecondPage() {
       return _ref.apply(this, arguments);
     };
   }();
+
+  // function to format wiki title with underscores for spaces
   var formatWikiTitle = function formatWikiTitle(title) {
     var formattedTitle = title.replace(/\s/g, "_");
     return formattedTitle;
   };
-  if (!isLoaded) {
-    return null;
-  } else {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "This is the second page", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, searchValue), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+  var formatWikiString = function formatWikiString(string) {
+    return string.replace(/(<([^>]+)>)/ig, '');
+  };
+  if (searchResults.length < 1) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Oops nothing here"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
       to: "/"
-    }, "Back to Search"), searchResults.map(function (entry) {
+    }, "Back to Search"));
+  } else {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "results-container"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
+      className: "second-page-title"
+    }, "CNYCN Wiki App"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+      className: "back-button",
+      to: "/"
+    }, "Back to Search"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
+      className: "results-text"
+    }, "Results for: ", searchValue), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "array-container"
+    }, searchResults.map(function (entry, i) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
         href: "https://wikipedia.org/wiki/".concat(formatWikiTitle(entry.title)),
+        key: "link".concat(i),
+        className: "result-link",
         target: "_blank"
-      }, entry.title);
-    }));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
+        className: "entry-title"
+      }, entry.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+        className: "entry-text"
+      }, formatWikiString(entry.snippet), "..."));
+    })));
   }
+  ;
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SecondPage);
 

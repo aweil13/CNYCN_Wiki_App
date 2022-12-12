@@ -102,11 +102,11 @@ const FirstPage = () => {
   return (  
     <div className="main-page-container">
       <div className="input-text-random-container">
-        <span>Please click on the icon</span>
+        <h1 className="app-title">CNYCN Wiki App</h1>
+        <span className="prompt">Click to Search</span>
         <input className="search-input" type="text" onChange={handleChange} value={searchValue}/>
-        <button onClick={() => fetchWiki(searchValue)}>Search</button>
-        <a href={randomWikiLink} target="_blank">Random Link</a>
-        <Link to="/results" state={{search: searchValue}}>Results</Link>
+        <Link to="/results" state={{search: searchValue}} className="results-button">Results</Link>
+        <a href={randomWikiLink} target="_blank" className="random-link">Random Link</a>
       </div>
     </div>
     )}

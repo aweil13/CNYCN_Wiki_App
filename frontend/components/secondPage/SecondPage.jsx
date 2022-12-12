@@ -12,7 +12,9 @@ const SecondPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    if (searchValue !== undefined) {
     fetchWiki();
+    }
     console.log(searchResults);
   }, []);
 
@@ -22,7 +24,7 @@ const SecondPage = () => {
     + "&list=search" // request search results in array
     + `&srsearch=${searchValue}` // specify search term
     + "&srlimit=50" // 100 results 
-    + "&exsentences=2" // request first 2 sentences from wiki page
+    + "&srprop=snippet" //extract from page
     + "&explaintext=1" // requests API to provide content in plain text
     + "&format=json" // requests data in JSON format
     + "&formatversion=2" // JSON easier to navigate
@@ -46,26 +48,44 @@ const SecondPage = () => {
     }
   }
 
+  // function to format wiki title with underscores for spaces
   const formatWikiTitle = title => {
     const formattedTitle = title.replace(/\s/g, "_")
     return formattedTitle
+  };
+
+  const formatWikiString = string =>{
+    return string.replace( /(<([^>]+)>)/ig, '');
   }
 
-if (!isLoaded) {
-  return (null)
-} else {
+
+if (searchResults.length < 1) {
   return (
     <div>
-      This is the second page
-      <div>{searchValue}</div>
-      <Link to="/">Back to Search</Link>
-      {searchResults.map(entry => (
-        <a href={`https://wikipedia.org/wiki/${formatWikiTitle(entry.title)}`} target="_blank">
-          {entry.title}
+      <div>
+      Oops nothing here
+      </div>
+      <Link to="/">
+        Back to Search
+      </Link>
+    </div>
+    );
+} else {
+  return (
+    <div className="results-container">
+      <h1 className="second-page-title">CNYCN Wiki App</h1>    
+      <Link className="back-button" to="/">Back to Search</Link>
+      <h1 className="results-text">Results for: {searchValue}</h1>
+      <div className="array-container">
+      {searchResults.map((entry, i) => (
+        <a href={`https://wikipedia.org/wiki/${formatWikiTitle(entry.title)}`} key={`link${i}`} className="result-link" target="_blank">
+          <h2 className="entry-title">{entry.title}</h2>
+          <p className="entry-text">{formatWikiString(entry.snippet)}...</p>
         </a>
       ))}
+      </div>
     </div>
-  )}
+  )};
 
 }
 
