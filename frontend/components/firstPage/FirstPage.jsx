@@ -14,7 +14,6 @@ const FirstPage = () => {
   // updates state change for search input
   const handleChange = e => {
     setSearchValue(e.target.value)
-    console.log(searchValue)
   };
 
   // use effect to run async api call and populate necessary state variables before render
@@ -42,7 +41,6 @@ const FirstPage = () => {
       const title = formatWikiTitle(res_1.data.query.random[0].title)
       setRandomWikiLink(`https://wikipedia.org/wiki/${title}`);
       setIsLoaded(true);
-      console.log(isLoaded);
     } catch (err) {
       return console.log(err);
     }
