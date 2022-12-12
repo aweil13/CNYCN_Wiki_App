@@ -3,4 +3,7 @@ Rails.application.routes.draw do
 
   root to: 'root#root'
 
+  get '/results', to: 'results#results'
+  
+
 end
