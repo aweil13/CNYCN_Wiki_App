@@ -3545,37 +3545,27 @@ var FirstPage = function FirstPage() {
     _useState2 = _slicedToArray(_useState, 2),
     searchValue = _useState2[0],
     setSearchValue = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState4 = _slicedToArray(_useState3, 2),
-    searchResults = _useState4[0],
-    setSearchResults = _useState4[1];
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default().useState(""),
     _React$useState2 = _slicedToArray(_React$useState, 2),
-    randomResult = _React$useState2[0],
-    setRandomResult = _React$useState2[1];
-  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0___default().useState(""),
+    randomWikiLink = _React$useState2[0],
+    setRandomWikiLink = _React$useState2[1];
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0___default().useState(false),
     _React$useState4 = _slicedToArray(_React$useState3, 2),
-    randomWikiLink = _React$useState4[0],
-    setRandomWikiLink = _React$useState4[1];
-  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0___default().useState(false),
-    _React$useState6 = _slicedToArray(_React$useState5, 2),
-    isLoaded = _React$useState6[0],
-    setIsLoaded = _React$useState6[1];
-  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_0___default().useState(null),
-    _React$useState8 = _slicedToArray(_React$useState7, 2),
-    error = _React$useState8[0],
-    setError = _React$useState8[1];
+    isLoaded = _React$useState4[0],
+    setIsLoaded = _React$useState4[1];
 
   // updates state change for search input
   var handleChange = function handleChange(e) {
     setSearchValue(e.target.value);
     console.log(searchValue);
   };
+
+  // use effect to run async api call and populate necessary state variables before render
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     randomWiki();
   }, []);
 
-  // random wiki api call
+  // api call using wikimedia to receive single title from random page to then populate wiki link state variable
   var randomWiki = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
       var wikiEndpoint, wikiParams, wikiLink, getWikiResponse, _getWikiResponse, res_1, title;
@@ -3616,79 +3606,28 @@ var FirstPage = function FirstPage() {
             case 8:
               res_1 = _context2.sent;
               title = formatWikiTitle(res_1.data.query.random[0].title);
-              console.log(title);
-              setRandomResult(title);
               setRandomWikiLink("https://wikipedia.org/wiki/".concat(title));
               setIsLoaded(true);
               console.log(isLoaded);
-              _context2.next = 20;
+              _context2.next = 18;
               break;
-            case 17:
-              _context2.prev = 17;
+            case 15:
+              _context2.prev = 15;
               _context2.t0 = _context2["catch"](5);
               return _context2.abrupt("return", console.log(_context2.t0));
-            case 20:
+            case 18:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[5, 17]]);
+      }, _callee2, null, [[5, 15]]);
     }));
     return function randomWiki() {
       return _ref.apply(this, arguments);
     };
   }();
 
-  // fetching wikipedia data function
-  var fetchWiki = function fetchWiki(search) {
-    var wikiEndpoint = 'https://simple.wikipedia.org/w/api.php';
-    var wikiParams = '?action=query' + "&list=search" // request search results in array
-    + "&srsearch=".concat(search) // specify search term
-    + "&srlimit=50" // 100 results 
-    + "&exsentences=2" // request first 2 sentences from wiki page
-    + "&explaintext=1" // requests API to provide content in plain text
-    + "&format=json" // requests data in JSON format
-    + "&formatversion=2" // JSON easier to navigate
-    + "&origin=*"; // ommiting causes error
-
-    var wikiLink = wikiEndpoint + wikiParams;
-    var wikiConfig = {
-      timeout: 3000
-    };
-
-    // async http get request/response function to mediawiki api 
-    function getWikiResponse(_x3, _x4) {
-      return _getWikiResponse4.apply(this, arguments);
-    }
-    function _getWikiResponse4() {
-      _getWikiResponse4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(url, config) {
-        var res;
-        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1__["default"].get(url, config);
-              case 2:
-                res = _context3.sent;
-                return _context3.abrupt("return", res.data);
-              case 4:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }));
-      return _getWikiResponse4.apply(this, arguments);
-    }
-    return getWikiResponse(wikiLink, wikiConfig).then(function (res) {
-      setSearchResults(res.query);
-      console.log(searchResults);
-      console.log(searchValue);
-    })["catch"](function (err) {
-      return console.log(err);
-    });
-  };
+  // function to format title
   var formatWikiTitle = function formatWikiTitle(title) {
     var formattedTitle = title.replace(/\s/g, "_");
     return formattedTitle;
@@ -3719,7 +3658,7 @@ var FirstPage = function FirstPage() {
       href: randomWikiLink,
       target: "_blank",
       className: "random-link"
-    }, "Random Link")));
+    }, "Random Article")));
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FirstPage);
@@ -3790,27 +3729,27 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var SecondPage = function SecondPage() {
+  // state variables
   var location = (0,react_router__WEBPACK_IMPORTED_MODULE_1__.useLocation)();
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(location.state.search),
+  var _ref = location !== null ? (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(location.state.search) : (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _ref2 = _slicedToArray(_ref, 2),
+    searchValue = _ref2[0],
+    setSearchValue = _ref2[1];
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
-    searchValue = _useState2[0],
-    setSearchValue = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState4 = _slicedToArray(_useState3, 2),
-    searchResults = _useState4[0],
-    setSearchResults = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState6 = _slicedToArray(_useState5, 2),
-    isLoaded = _useState6[0],
-    setIsLoaded = _useState6[1];
+    searchResults = _useState2[0],
+    setSearchResults = _useState2[1];
+
+  // useEffect to make api call asynchronous to page render
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (searchValue !== undefined) {
       fetchWiki();
     }
-    console.log(searchResults);
   }, []);
+
+  // wikimedia api call  
   var fetchWiki = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
       var wikiEndpoint, wikiParams, wikiLink, getWikiResponse, _getWikiResponse, res_1;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) {
@@ -3843,7 +3782,7 @@ var SecondPage = function SecondPage() {
               wikiEndpoint = 'https://simple.wikipedia.org/w/api.php';
               wikiParams = '?action=query' + "&list=search" // request search results in array
               + "&srsearch=".concat(searchValue) // specify search term
-              + "&srlimit=50" // 100 results 
+              + "&srlimit=50" // 50 results 
               + "&srprop=snippet" //extract from page
               + "&explaintext=1" // requests API to provide content in plain text
               + "&format=json" // requests data in JSON format
@@ -3856,23 +3795,21 @@ var SecondPage = function SecondPage() {
             case 8:
               res_1 = _context2.sent;
               setSearchResults(res_1.query.search);
-              setIsLoaded(true);
-              console.log(res_1.query.search);
-              _context2.next = 17;
+              _context2.next = 15;
               break;
-            case 14:
-              _context2.prev = 14;
+            case 12:
+              _context2.prev = 12;
               _context2.t0 = _context2["catch"](5);
               return _context2.abrupt("return", console.log(_context2.t0));
-            case 17:
+            case 15:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[5, 14]]);
+      }, _callee2, null, [[5, 12]]);
     }));
     return function fetchWiki() {
-      return _ref.apply(this, arguments);
+      return _ref3.apply(this, arguments);
     };
   }();
 
@@ -3881,11 +3818,20 @@ var SecondPage = function SecondPage() {
     var formattedTitle = title.replace(/\s/g, "_");
     return formattedTitle;
   };
+
+  // function to format snippet string and remove any html tags
   var formatWikiString = function formatWikiString(string) {
     return string.replace(/(<([^>]+)>)/ig, '');
   };
+
+  // conditional rendering based on results array length
   if (searchResults.length < 1) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Oops nothing here"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "oops-container"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
+      className: "oops-message"
+    }, "Oops nothing here... Try a different search!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+      className: "back-to-search-button",
       to: "/"
     }, "Back to Search"));
   } else {
@@ -3899,7 +3845,7 @@ var SecondPage = function SecondPage() {
     }, "Back to Search"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
       className: "results-text"
     }, "Results for: ", searchValue), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      className: "array-container"
+      className: "array-container wrap"
     }, searchResults.map(function (entry, i) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
         href: "https://wikipedia.org/wiki/".concat(formatWikiTitle(entry.title)),

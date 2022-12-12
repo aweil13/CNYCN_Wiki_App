@@ -31,10 +31,106 @@
 
 .back-button:hover{
   color: rgb(129, 129, 129);
-  background: rgb(32, 32, 32);
+  background: rgb(19, 19, 19);
+  border-top: 1px solid blue;
+  border-left: 1px solid blue;
+  border-bottom: 1px solid rgb(255, 145, 0);
+  border-right: 1px solid rgb(255, 145, 0);
 }
 
 .results-text{
   margin: auto;
   color: aliceblue;
+  margin-bottom: 2%;
+}
+
+.array-container{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.wrap{
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.result-link{
+  margin: auto;
+  width: 28%;
+  border: 2px solid gray;
+  margin-top: 2%;
+  text-align: center;
+  background-color: #fff;
+  transition-duration: 0.2s;
+  // box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-family: 'Linux Libertine','Georgia','Times',serif;
+  color: #333333;
+  animation-duration: 1s;
+  animation-name: slidein;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.result-link:hover{
+  background-color: rgb(214, 214, 214);
+  border-bottom: 2px solid rgb(255, 144, 40);
+  border-top: 2px solid rgb(255, 144, 40);
+}
+
+.entry-title{
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.oops-container{
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 300px;
+  width: 300px;
+  height: 300px;
+}
+
+.oops-message{
+  color: #fff;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.back-to-search-button{
+  font: bold 25px Arial;
+  text-decoration: none;
+  width: 40%;
+  margin: auto;
+  background: none;
+  border-radius: 20px;
+  color: whitesmoke;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  text-align: center;
+  transition-duration: 0.3s;
+}
+
+.back-to-search-button:hover{
+  color: rgb(129, 129, 129);
+  background: rgb(19, 19, 19);
+  border-top: 1px solid blue;
+  border-left: 1px solid blue;
+  border-bottom: 1px solid rgb(255, 145, 0);
+  border-right: 1px solid rgb(255, 145, 0);
 }

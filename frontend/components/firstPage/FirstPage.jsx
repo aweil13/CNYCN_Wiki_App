@@ -8,11 +8,8 @@ const FirstPage = () => {
 
   // state variables
   const [searchValue, setSearchValue] = useState("")
-  const [searchResults, setSearchResults] = useState(null)  
-  const [randomResult, setRandomResult] = React.useState("")
   const [randomWikiLink, setRandomWikiLink] = React.useState("")
   const [isLoaded, setIsLoaded] = React.useState(false)
-  const [error, setError] = React.useState(null)
 
   // updates state change for search input
   const handleChange = e => {
@@ -20,14 +17,12 @@ const FirstPage = () => {
     console.log(searchValue)
   };
 
+  // use effect to run async api call and populate necessary state variables before render
   useEffect(() => {
     randomWiki();
   }, []);
 
-
-
-
-  // random wiki api call
+  // api call using wikimedia to receive single title from random page to then populate wiki link state variable
   const randomWiki = async () => {
     const wikiEndpoint = 'https://simple.wikipedia.org/w/api.php'
     const wikiParams = '?action=query'
@@ -45,54 +40,19 @@ const FirstPage = () => {
     try {
       const res_1 = await getWikiResponse(wikiLink);
       const title = formatWikiTitle(res_1.data.query.random[0].title)
-      console.log(title);
-      setRandomResult(title);
       setRandomWikiLink(`https://wikipedia.org/wiki/${title}`);
       setIsLoaded(true);
       console.log(isLoaded);
     } catch (err) {
       return console.log(err);
     }
-  }
+  };
 
-  // fetching wikipedia data function
-  const fetchWiki = (search) => {
-    const wikiEndpoint = 'https://simple.wikipedia.org/w/api.php'
-    const wikiParams = '?action=query'
-    + "&list=search" // request search results in array
-    + `&srsearch=${search}` // specify search term
-    + "&srlimit=50" // 100 results 
-    + "&exsentences=2" // request first 2 sentences from wiki page
-    + "&explaintext=1" // requests API to provide content in plain text
-    + "&format=json" // requests data in JSON format
-    + "&formatversion=2" // JSON easier to navigate
-    + "&origin=*" // ommiting causes error
-
-    const wikiLink = wikiEndpoint + wikiParams
-    
-
-    const wikiConfig = {
-      timeout: 3000
-    }
-
-    // async http get request/response function to mediawiki api 
-    async function getWikiResponse(url, config){
-      const res = await axios.get(url,config)
-      return res.data
-    }
-    return getWikiResponse(wikiLink, wikiConfig).then(res => {
-      setSearchResults(res.query)
-      console.log(searchResults)
-      console.log(searchValue)
-    }).catch(err => console.log(err))
-  }
-
-  
-
+  // function to format title
   const formatWikiTitle = title => {
     const formattedTitle = title.replace(/\s/g, "_")
     return formattedTitle
-  }
+  };
 
   if (!isLoaded) {
     return (
@@ -106,7 +66,7 @@ const FirstPage = () => {
         <span className="prompt">Click to Search</span>
         <input className="search-input" type="text" onChange={handleChange} value={searchValue}/>
         <Link to="/results" state={{search: searchValue}} className="results-button">Results</Link>
-        <a href={randomWikiLink} target="_blank" className="random-link">Random Link</a>
+        <a href={randomWikiLink} target="_blank" className="random-link">Random Article</a>
       </div>
     </div>
     )}

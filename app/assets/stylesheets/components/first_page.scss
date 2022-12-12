@@ -13,8 +13,8 @@ body{
   margin: auto;
   margin-top: 300px;
   margin-bottom: auto;
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
 }
 
 .input-text-random-container{
@@ -27,12 +27,13 @@ body{
 .app-title{
   color: #CCCCCC;
   text-align: center;
+  font-size: 40px;
 }
 
 .prompt{
   color: whitesmoke;
   text-align: center;
-  font: 15px Arial;
+  font: 17px Arial;
   letter-spacing: 1px;
 }
 
@@ -41,20 +42,20 @@ body{
   // padding: 2px;
   border-radius: 20px;
   transition: width 0.4s ease-in-out;
-  width: 30%;
+  width: 40%;
   height: 30px;
   background: none;
   color: #EEEEEE;
   text-align: center;
   margin: auto;
   text-decoration: solid;
-  font: 14px Arial;
-  letter-spacing: 1px;
+  font: 16px Arial;
+  letter-spacing: 1.5px;
 }
 
 .search-input:focus{
   width: 80%;
-  border: red;
+  border: 1px solid rgb(255, 136, 0);
 }
 
 .results-button{
@@ -76,7 +77,11 @@ body{
 
 .results-button:hover{
   color: rgb(129, 129, 129);
-  background: rgb(32, 32, 32);
+  background: rgb(19, 19, 19);
+  border-top: 1px solid blue;
+  border-left: 1px solid blue;
+  border-bottom: 1px solid rgb(255, 145, 0);
+  border-right: 1px solid rgb(255, 145, 0);
 }
 
 .random-link{
@@ -98,5 +103,9 @@ body{
 
 .random-link:hover{
   color: rgb(129, 129, 129);
-  background: rgb(32, 32, 32);
+  background: rgb(19, 19, 19);
+  border-top: 1px solid blue;
+  border-left: 1px solid blue;
+  border-bottom: 1px solid rgb(255, 145, 0);
+  border-right: 1px solid rgb(255, 145, 0);
 }

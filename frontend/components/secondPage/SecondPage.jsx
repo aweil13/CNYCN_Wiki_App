@@ -6,24 +6,26 @@ import axios from "axios";
 
 const SecondPage = () => {
 
+  // state variables
   const location = useLocation();
-  const [searchValue, setSearchValue] = useState(location.state.search);
+  const [searchValue, setSearchValue] = location !== null ? useState(location.state.search) : useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
 
+  // useEffect to make api call asynchronous to page render
   useEffect(() => {
     if (searchValue !== undefined) {
     fetchWiki();
     }
-    console.log(searchResults);
+    
   }, []);
 
+  // wikimedia api call  
   const fetchWiki = async () => {
     const wikiEndpoint = 'https://simple.wikipedia.org/w/api.php'
     const wikiParams = '?action=query'
     + "&list=search" // request search results in array
     + `&srsearch=${searchValue}` // specify search term
-    + "&srlimit=50" // 100 results 
+    + "&srlimit=50" // 50 results 
     + "&srprop=snippet" //extract from page
     + "&explaintext=1" // requests API to provide content in plain text
     + "&format=json" // requests data in JSON format
@@ -41,8 +43,6 @@ const SecondPage = () => {
     try {
       const res_1 = await getWikiResponse(wikiLink);
       setSearchResults(res_1.query.search);
-      setIsLoaded(true);
-      console.log(res_1.query.search);
     } catch (err) {
       return console.log(err);
     }
@@ -54,18 +54,20 @@ const SecondPage = () => {
     return formattedTitle
   };
 
+  // function to format snippet string and remove any html tags
   const formatWikiString = string =>{
     return string.replace( /(<([^>]+)>)/ig, '');
   }
 
-
+// conditional rendering based on results array length
 if (searchResults.length < 1) {
   return (
-    <div>
-      <div>
-      Oops nothing here
-      </div>
-      <Link to="/">
+    <div className='oops-container'>
+      <h1 className="oops-message">
+      Oops nothing here...
+      Try a different search!
+      </h1>
+      <Link className="back-to-search-button" to="/">
         Back to Search
       </Link>
     </div>
@@ -76,7 +78,7 @@ if (searchResults.length < 1) {
       <h1 className="second-page-title">CNYCN Wiki App</h1>    
       <Link className="back-button" to="/">Back to Search</Link>
       <h1 className="results-text">Results for: {searchValue}</h1>
-      <div className="array-container">
+      <div className="array-container wrap">
       {searchResults.map((entry, i) => (
         <a href={`https://wikipedia.org/wiki/${formatWikiTitle(entry.title)}`} key={`link${i}`} className="result-link" target="_blank">
           <h2 className="entry-title">{entry.title}</h2>
